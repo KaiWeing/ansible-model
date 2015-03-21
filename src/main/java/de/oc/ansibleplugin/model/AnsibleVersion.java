@@ -1,4 +1,4 @@
-package de.oc.ansibleplugin;
+package de.oc.ansibleplugin.model;
 
 /**
  * Describes an Ansible API Version.

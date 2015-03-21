@@ -1,4 +1,4 @@
-package de.oc.ansibleplugin;
+package de.oc.ansibleplugin.model;
 
 import java.util.ArrayList;
 import java.util.Collection;

@@ -1,5 +1,6 @@
-package de.oc.ansibleplugin;
+package de.oc.ansibleplugin.model;
 
+import de.oc.ansibleplugin.model.AnsibleVersion;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;

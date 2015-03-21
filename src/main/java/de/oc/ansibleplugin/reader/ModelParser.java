@@ -1,9 +1,9 @@
 package de.oc.ansibleplugin.reader;
 
-import de.oc.ansibleplugin.AnsibleModule;
-import de.oc.ansibleplugin.AnsibleModuleOption;
-import de.oc.ansibleplugin.AnsibleModules;
-import de.oc.ansibleplugin.AnsibleVersion;
+import de.oc.ansibleplugin.model.AnsibleModule;
+import de.oc.ansibleplugin.model.AnsibleModuleOption;
+import de.oc.ansibleplugin.model.AnsibleModules;
+import de.oc.ansibleplugin.model.AnsibleVersion;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -20,12 +20,12 @@ import java.util.stream.Collectors;
  *
  * Created by Weingärtner on 21.03.2015.
  */
-public class ModuleReader {
+public class ModelParser {
 
     private static final Pattern MODULE_VERSION_PATTERN = Pattern.compile("New in version (\\d\\.\\d).");
     private static final Pattern OPTION_VERSION_PATTERN = Pattern.compile(".*\\(added in Ansible (\\d\\.\\d)\\)");
 
-    public ModuleReader() {
+    public ModelParser() {
 
     }
 
@@ -61,7 +61,7 @@ public class ModuleReader {
             System.err.println("parsing " + modulePath + "...");
             Element doc = getBodyFrom(modulePath);
             AnsibleModule module = new AnsibleModule();
-            String title = doc.select("div#page-content div.section h1").get(0).text();
+            String title = doc.select("div#page-content div.section h1").get(0).ownText();
             String titleParts[] = title.split(" - ");
             module.setName(titleParts[0]);
             module.setInfo(titleParts[1]);

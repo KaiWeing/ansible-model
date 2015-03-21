@@ -1,7 +1,7 @@
 package de.oc.ansibleplugin.json;
 
 import com.google.gson.*;
-import de.oc.ansibleplugin.AnsibleVersion;
+import de.oc.ansibleplugin.model.AnsibleVersion;
 
 import java.lang.reflect.Type;
 

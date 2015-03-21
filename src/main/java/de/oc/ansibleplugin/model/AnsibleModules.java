@@ -1,7 +1,10 @@
-package de.oc.ansibleplugin;
+package de.oc.ansibleplugin.model;
 
-import de.oc.ansibleplugin.reader.ModuleReader;
+import de.oc.ansibleplugin.json.JsonModelReaderWriter;
+import de.oc.ansibleplugin.reader.ModelParser;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -13,6 +16,9 @@ import java.util.stream.Collectors;
  */
 public class AnsibleModules {
     private HashMap<String, AnsibleModule> modules = new HashMap<>();
+
+    public AnsibleModules() {
+    }
 
     public AnsibleModules(Collection<AnsibleModule> values) {
         addModules(values);
@@ -38,6 +44,10 @@ public class AnsibleModules {
         return new AnsibleModules(values);
     }
 
+    public AnsibleModule getModule(String name) {
+        return modules.get(name);
+    }
+
     public AnsibleVersion getApiVersion() {
         return modules.values().stream()
                 .map(AnsibleModule::getSinceVersion)
@@ -50,12 +60,14 @@ public class AnsibleModules {
         return modules.values().toString();
     }
 
-    public static void main(String[] args) {
-        ModuleReader reader = new ModuleReader();
+    public static void main(String[] args) throws IOException {
+        File ansibleModel = File.createTempFile("ansible_model", ".json");
+        ModelParser reader = new ModelParser();
         AnsibleModules ansibleModules = reader.readModules("list_of_all_modules.html");
-        AnsibleModules a10modules = ansibleModules.findModules("a10");
+        JsonModelReaderWriter jsonModelReaderWriter = new JsonModelReaderWriter(ansibleModel);
+        jsonModelReaderWriter.write(ansibleModules);
 
-        System.out.println(a10modules);
+        System.out.println("written to " + ansibleModel.getAbsolutePath());
     }
 
 }

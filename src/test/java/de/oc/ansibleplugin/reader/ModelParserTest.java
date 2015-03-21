@@ -1,8 +1,8 @@
 package de.oc.ansibleplugin.reader;
 
-import de.oc.ansibleplugin.AnsibleModule;
-import de.oc.ansibleplugin.AnsibleModuleOption;
-import de.oc.ansibleplugin.AnsibleVersion;
+import de.oc.ansibleplugin.model.AnsibleModule;
+import de.oc.ansibleplugin.model.AnsibleModuleOption;
+import de.oc.ansibleplugin.model.AnsibleVersion;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -15,9 +15,9 @@ import static org.junit.matchers.JUnitMatchers.hasItem;
 /**
  * Created by Weingärtner on 21.03.2015.
  */
-public class ModuleReaderTest {
+public class ModelParserTest {
 
-    private ModuleReader sut = new ModuleReader();
+    private ModelParser sut = new ModelParser();
 
     @Test
     public void testReadModule() {
