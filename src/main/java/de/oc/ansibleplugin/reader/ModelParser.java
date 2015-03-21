@@ -80,14 +80,14 @@ public class ModelParser {
 
     private Collection<AnsibleModuleOption> parseOptions(Element optionsDiv) {
         return optionsDiv.select("table tr").stream()
-                .filter(a -> a.select("th").isEmpty())
-                .map(o -> {
-                    Elements cells = o.select("td");
+                .map(tr -> tr.select("td"))
+                .filter(cells -> !cells.isEmpty())
+                .map(cells -> {
                     AnsibleModuleOption option = new AnsibleModuleOption();
                     option.setName(cells.get(0).text());
                     option.setRequired(cells.get(1).text().contains("yes"));
-                    option.setDefaultValue(cells.get(2).text());
-                    option.setChoices(ulToStrings(cells.get(3).child(0)));
+                    option.setDefaultValue(emptyToNull(cells.get(2).text()));
+                    option.setChoices(listItemsToString(cells.get(3).child(0)));
                     option.setComments(cells.get(4).text());
                     option.setSinceVersion(tryParseVersion(option.getComments(), OPTION_VERSION_PATTERN));
                     return option;
@@ -95,7 +95,11 @@ public class ModelParser {
                 .collect(Collectors.toList());
     }
 
-    private List<String> ulToStrings(Element unorderedList) {
+    private String emptyToNull(String s) {
+        return s.isEmpty() ? null : s;
+    }
+
+    private List<String> listItemsToString(Element unorderedList) {
         return unorderedList.select("li").stream()
                 .map(Element::text)
                 .collect(Collectors.toList());

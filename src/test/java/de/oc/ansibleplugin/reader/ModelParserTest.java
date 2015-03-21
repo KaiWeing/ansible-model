@@ -43,4 +43,11 @@ public class ModelParserTest {
         assertThat(redisModule.getOption("name").getSinceVersion(), is(AnsibleVersion.valueOf("1.6")));
         assertThat(redisModule.getRequiredOptions().size(), is(1));
     }
+
+    @Test
+    public void testDefaultValueNullWhenEmpty() {
+        AnsibleModule redisModule = sut.readModule("redis_module.html");
+
+        assertThat(redisModule.getOption("db").getDefaultValue(), is(nullValue()));
+    }
 }
